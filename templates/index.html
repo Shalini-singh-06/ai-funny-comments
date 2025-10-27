@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Funny Comment Generator 😎</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; background: #121212; color: #fff; }
+    input { width: 60%; padding: 10px; border-radius: 10px; border: none; }
+    button { padding: 10px 20px; margin-top: 10px; background: #03dac6; border: none; border-radius: 10px; cursor: pointer; }
+    pre { text-align: left; width: 60%; margin: 20px auto; background: #1e1e1e; padding: 15px; border-radius: 10px; }
+    audio { margin-top: 15px; }
+  </style>
+</head>
+<body>
+  <h1>🎭 Funny Comment Generator</h1>
+  <input id="link" placeholder="Paste YouTube or Instagram link..." />
+  <br>
+  <button onclick="generateComments()">🎬 Generate Comments</button>
+
+  <p id="status"></p>
+  <pre id="output"></pre>
+  <audio id="audio" controls></audio>
+
+  <script>
+    async function generateComments() {
+      const link = document.getElementById('link').value;
+      const output = document.getElementById('output');
+      const status = document.getElementById('status');
+      const audio = document.getElementById('audio');
+
+      if (!link) {
+        alert("Please paste a valid reel or short link!");
+        return;
+      }
+
+      status.textContent = "⏳ Generating funny comments...";
+      output.textContent = "";
+      audio.src = "";
+
+      const response = await fetch("/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ link })
+      });
+
+      const data = await response.json();
+      status.textContent = "✅ Comments Generated!";
+      output.textContent = data.comments;
+      audio.src = data.audio;
+    }
+  </script>
+</body>
+</html>

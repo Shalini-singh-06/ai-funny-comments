@@ -1,0 +1,8 @@
+Flask
+google-generativeai
+gTTS
+instaloader
+requests
+youtube-transcript-api
+python-dotenv
+gunicorn
